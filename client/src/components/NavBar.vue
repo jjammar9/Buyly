@@ -1,169 +1,212 @@
 <script setup>
-const categories = [
-  'Fruits & Vegetables',
-  'Meat & Seafood',
-  'Dairy & Eggs',
-  'Bakery',
-  'Deli',
-  'Beverages',
-  'Snacks',
-  'Pantry',
-  'Frozen',
-]
+import { ref } from 'vue'
+import BuylyLogo from '../assets/Logo1.png'
+
+const drawerOpen = ref(false)
+
+function toggleDrawer() {
+  drawerOpen.value = !drawerOpen.value
+}
 </script>
 
 <template>
   <header class="nav-header">
-    <div class="top-bar">
-      <div class="logo-section">
-        <span class="logo-text">Buyly</span>
-      </div>
-      <div class="search-section">
-        <div class="search-bar">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.35-4.35" />
-          </svg>
-          <input type="text" placeholder="Search products..." class="search-input" />
+    <div class="container">
+      <div class="nav-inner">
+        <div class="nav-left">
+          <button class="hamburger" @click="toggleDrawer">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
+          <a href="/" class="logo-link">
+            <img :src="BuylyLogo" alt="Buyly" class="logo-img" />
+          </a>
+        </div>
+        <div class="nav-right">
+          <button class="btn btn-login">Log In</button>
+          <button class="btn btn-signup">Sign Up</button>
         </div>
       </div>
-      <div class="auth-section">
-        <button class="btn btn-outline">Log In</button>
-        <button class="btn btn-primary">Sign Up</button>
+    </div>
+  </header>
+
+  <Teleport to="body">
+    <div v-if="drawerOpen" class="drawer-overlay" @click="toggleDrawer">
+      <div class="drawer" @click.stop>
+        <div class="drawer-header">
+          <span class="drawer-title">Menu</span>
+          <button class="drawer-close" @click="toggleDrawer">✕</button>
+        </div>
+        <nav class="drawer-links">
+          <a href="#" class="drawer-link">Home</a>
+          <a href="#" class="drawer-link">Shop</a>
+          <a href="#" class="drawer-link">Categories</a>
+          <a href="#" class="drawer-link">My Account</a>
+          <a href="#" class="drawer-link">Orders</a>
+          <a href="#" class="drawer-link">Help</a>
+        </nav>
       </div>
     </div>
-    <nav class="category-bar">
-      <button
-        v-for="category in categories"
-        :key="category"
-        class="category-link"
-      >
-        {{ category }}
-      </button>
-    </nav>
-  </header>
+  </Teleport>
 </template>
 
 <style scoped>
 .nav-header {
   background: #fff;
-  border-bottom: 1px solid #e5e7eb;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  border-bottom: 1px solid #e8e8e8;
+  font-family: var(--font-sans);
 }
 
-.top-bar {
+.nav-inner {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 12px 24px;
-  max-width: 1280px;
-  margin: 0 auto;
+  justify-content: space-between;
+  padding: 14px 0;
 }
 
-.logo-section {
-  flex-shrink: 0;
-}
-
-.logo-text {
-  font-size: 28px;
-  font-weight: 800;
-  color: #6366f1;
-  letter-spacing: -0.5px;
-}
-
-.search-section {
-  flex: 1;
-}
-
-.search-bar {
-  position: relative;
-  max-width: 480px;
-}
-
-.search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  color: #9ca3af;
-}
-
-.search-input {
-  width: 100%;
-  padding: 10px 16px 10px 40px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 14px;
-  outline: none;
-  background: #f9fafb;
-  transition: border-color 0.2s;
-}
-
-.search-input:focus {
-  border-color: #6366f1;
-  background: #fff;
-}
-
-.auth-section {
+.nav-left {
   display: flex;
-  gap: 8px;
-  flex-shrink: 0;
+  align-items: center;
+  gap: 16px;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.bar {
+  width: 22px;
+  height: 2.5px;
+  background: #222;
+  border-radius: 2px;
+}
+
+.logo-link {
+  line-height: 0;
+}
+
+.logo-img {
+  height: 36px;
+  display: block;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .btn {
-  padding: 8px 20px;
+  padding: 10px 22px;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
+  font-family: var(--font-sans);
   cursor: pointer;
   border: none;
-  transition: background 0.2s;
+  transition: background 0.15s;
 }
 
-.btn-outline {
+.btn-login {
   background: transparent;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  color: #222;
 }
 
-.btn-outline:hover {
-  background: #f3f4f6;
+.btn-login:hover {
+  background: #f0f0f0;
 }
 
-.btn-primary {
-  background: #6366f1;
+.btn-signup {
+  background: #166534;
   color: #fff;
 }
 
-.btn-primary:hover {
-  background: #4f46e5;
+.btn-signup:hover {
+  background: #14532d;
 }
 
-.category-bar {
+/* Drawer */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: fadeIn 0.2s;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 20%;
+  min-width: 220px;
+  max-width: 320px;
+  background: #fff;
+  z-index: 1001;
+  padding: 24px;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.25s ease-out;
+}
+
+.drawer-header {
   display: flex;
-  gap: 4px;
-  padding: 0 24px 12px;
-  max-width: 1280px;
-  margin: 0 auto;
-  overflow-x: auto;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
 }
 
-.category-link {
-  padding: 6px 16px;
+.drawer-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #166534;
+}
+
+.drawer-close {
+  background: none;
   border: none;
-  background: #f3f4f6;
-  color: #374151;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: 20px;
+  font-size: 20px;
   cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.2s;
+  color: #666;
+  padding: 4px;
 }
 
-.category-link:hover {
-  background: #e5e7eb;
+.drawer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.drawer-link {
+  display: block;
+  padding: 12px 16px;
+  color: #222;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.drawer-link:hover {
+  background: #f0f0f0;
+  color: #166534;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
 }
 </style>
