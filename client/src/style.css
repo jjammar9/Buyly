@@ -34,4 +34,10 @@ body {
   margin: 0 auto;
 }
 
+.section-container {
+  width: 70%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 

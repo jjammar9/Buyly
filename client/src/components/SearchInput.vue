@@ -77,7 +77,7 @@
 }
 
 .search-input::placeholder {
-  color: #9b9b9b;
+  color: #000;
 }
 
 @media (max-width: 768px) {

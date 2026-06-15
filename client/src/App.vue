@@ -1,20 +1,12 @@
 <script setup>
 import NavBar from './components/NavBar.vue'
+import HeroSection from './components/HeroSection.vue'
 </script>
 
 <template>
   <div class="app">
     <NavBar />
-    <div class="container">
-      <main class="main-content">
-        <div class="content-left">
-          <h1>Welcome to Buyly</h1>
-        </div>
-        <div class="content-right">
-          <p>Your grocery delivery service</p>
-        </div>
-      </main>
-    </div>
+    <HeroSection />
   </div>
 </template>
 
