@@ -3,7 +3,7 @@
     <div class="hero-inner">
       <div class="hero-left">
         <h1 class="hero-heading">
-          Order groceries for delivery or<br />pickup today
+          <span style="white-space: nowrap">Order groceries for delivery or</span><br />pickup today
         </h1>
         <button class="hero-btn" data-full-width="true">
           <span>Sign up to get $0 delivery fee*</span>
@@ -56,14 +56,14 @@ import heroBg from "../assets/Hero.png";
 .hero-heading {
   color: #fff;
   font-family: var(--font-sans);
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 8px;
   text-align: center;
 }
 .hero-btn {
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -72,17 +72,16 @@ import heroBg from "../assets/Hero.png";
   box-shadow: none;
   background: #108910;
   border: none;
-  border-radius: calc(40px / 2);
+  border-radius: calc(56px / 2);
   color: #FFFFFF;
-  height: 40px;
-  padding-left: 24px;
-  padding-right: 24px;
+  height: 56px;
+  padding: 16px 24px;
   position: relative;
   margin-top: 12px;
   margin-bottom: 12px;
 }
 .hero-terms {
-  font-size: 11px;
+  font-size: 13px;
   color: rgba(255, 255, 255, 0.65);
   font-family: var(--font-sans);
   display: block;
