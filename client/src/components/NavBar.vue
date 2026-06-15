@@ -22,8 +22,11 @@ function toggleSearch() {
     <div class="container">
       <div class="nav-inner">
         <div class="nav-left-group">
-          <button data-testid="menu-button" aria-label="Open main menu" class="hamburger" @click="toggleDrawer">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="#343538" aria-hidden="true">
+          <button data-testid="menu-button" :aria-label="drawerOpen ? 'Close menu' : 'Open main menu'" class="hamburger" @click="toggleDrawer">
+            <svg v-if="drawerOpen" width="28" height="28" viewBox="0 0 24 24" fill="#343538" aria-hidden="true">
+              <path d="M18 6L6 18M6 6l12 12" stroke="#343538" stroke-width="3" fill="none"/>
+            </svg>
+            <svg v-else width="28" height="28" viewBox="0 0 24 24" fill="#343538" aria-hidden="true">
               <path d="M20 6H4v2h16zM4 11h16v2H4zM4 16h16v2H4z"/>
             </svg>
           </button>
@@ -52,13 +55,25 @@ function toggleSearch() {
     </div>
   </nav>
 
-  <SlideDrawer :open="drawerOpen" @close="toggleDrawer">
-    <a href="#" class="drawer-link">Home</a>
-    <a href="#" class="drawer-link">Shop</a>
-    <a href="#" class="drawer-link">Categories</a>
-    <a href="#" class="drawer-link">My Account</a>
-    <a href="#" class="drawer-link">Orders</a>
-    <a href="#" class="drawer-link">Help</a>
+  <SlideDrawer :open="drawerOpen" :logoSrc="BuylyLogo" @close="toggleDrawer">
+    <a href="#" class="drawer-link">
+      <span>Departments</span>
+      <svg class="drawer-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </a>
+    <a href="#" class="drawer-link">
+      <span>More ways to shop</span>
+      <svg class="drawer-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </a>
+    <a href="#" class="drawer-link">
+      <span>Help</span>
+      <svg class="drawer-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </a>
   </SlideDrawer>
 </template>
 
@@ -67,6 +82,7 @@ function toggleSearch() {
   background: #f7f5f0;
   border-bottom: 1px solid #e8e8e8;
   font-family: var(--font-sans);
+
 }
 
 .nav-inner {
@@ -109,6 +125,8 @@ function toggleSearch() {
   height: 24px;
   display: block;
 }
+
+
 
 .search-section {
   flex: 1;
@@ -181,19 +199,22 @@ function toggleSearch() {
 }
 
 .drawer-link {
-  display: block;
-  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+  padding: 12px 0;
   color: #222;
   text-decoration: none;
   font-size: 15px;
   font-weight: 500;
   border-radius: 8px;
-  transition: background 0.15s;
 }
 
-.drawer-link:hover {
-  background: #f0f0f0;
-  color: #166534;
+.drawer-link-arrow {
+  display: block;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
