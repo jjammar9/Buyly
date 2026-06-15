@@ -73,7 +73,7 @@ function toggleSearch() {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 12px 0;
+  padding: 16px 0;
 }
 
 .nav-left-group {
@@ -199,7 +199,7 @@ function toggleSearch() {
 @media (max-width: 768px) {
   .nav-inner {
     gap: 10px;
-    padding: 8px 0;
+    padding: 12px 0;
   }
 
   .search-section {
