@@ -13,7 +13,6 @@ defineProps({
     :class="variant === 'primary'
       ? 'bg-[#0a8a4a] text-white hover:bg-[#097a42]'
       : 'bg-white text-[#222] border border-[#999] hover:bg-[#f0f0f0]'"
-    style="font-family: DM Sans, sans-serif"
   >
     <slot />
   </button>

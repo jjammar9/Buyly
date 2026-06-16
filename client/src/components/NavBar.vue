@@ -4,6 +4,7 @@ import BuylyLogo from '../assets/instacart-logo-color-6678cb82d531f8910d5ba270a1
 import SearchInput from './SearchInput.vue'
 import AppButton from './AppButton.vue'
 import SlideDrawer from './SlideDrawer.vue'
+import ChevronArrow from './ChevronArrow.vue'
 
 const drawerOpen = ref(false)
 const searchOpen = ref(false)
@@ -18,7 +19,7 @@ function toggleSearch() {
 </script>
 
 <template>
-  <nav class="bg-[#f7f5f0] border-b border-[#e8e8e8]" style="font-family: DM Sans, sans-serif">
+  <nav class="bg-[#f7f5f0] border-b border-[#e8e8e8]">
     <div class="w-[95%] max-w-[1440px] mx-auto">
       <div class="flex items-center gap-4 py-4 max-md:gap-[10px] max-md:py-3">
         <div class="flex items-center gap-1 shrink-0">
@@ -67,21 +68,15 @@ function toggleSearch() {
   <SlideDrawer :open="drawerOpen" :logoSrc="BuylyLogo" @close="toggleDrawer">
     <a href="#" class="flex justify-between items-center w-[90%] mx-auto py-3 text-[#222] no-underline text-[15px] font-medium rounded-lg">
       <span>Departments</span>
-      <svg class="shrink-0 block" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9 18 15 12 9 6"/>
-      </svg>
+      <ChevronArrow />
     </a>
     <a href="#" class="flex justify-between items-center w-[90%] mx-auto py-3 text-[#222] no-underline text-[15px] font-medium rounded-lg">
       <span>More ways to shop</span>
-      <svg class="shrink-0 block" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9 18 15 12 9 6"/>
-      </svg>
+      <ChevronArrow />
     </a>
     <a href="#" class="flex justify-between items-center w-[90%] mx-auto py-3 text-[#222] no-underline text-[15px] font-medium rounded-lg">
       <span>Help</span>
-      <svg class="shrink-0 block" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9 18 15 12 9 6"/>
-      </svg>
+      <ChevronArrow />
     </a>
   </SlideDrawer>
 </template>

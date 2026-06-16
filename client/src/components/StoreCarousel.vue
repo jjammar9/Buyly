@@ -4,7 +4,13 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 const logoFiles = import.meta.glob('../assets/*.{png,jpg,jpeg,webp}', { eager: true, query: '?url', import: 'default' })
 const allLogos = Object.values(logoFiles).filter(f => !f.includes('Hero') && !f.includes('image'))
 
-const times = ['8:35 am', '9:15 am', '10:00 am', '10:45 am', '11:20 am', '12:05 pm', '12:50 pm', '1:25 pm', '2:10 pm', '2:55 pm', '3:40 pm', '4:15 pm', '5:00 pm', '5:45 pm', '6:30 pm', '7:05 pm', '7:50 pm', '8:35 pm', '9:10 pm', '9:55 pm', '10:40 pm', '11:15 pm', '12:00 pm', '12:45 pm', '1:30 pm', '2:15 pm']
+const times = Array.from({ length: allLogos.length }, (_, i) => {
+  const totalMinutes = 515 + i * 45
+  const h = Math.floor(totalMinutes / 60) % 12 || 12
+  const m = String(totalMinutes % 60).padStart(2, '0')
+  const ampm = totalMinutes % 1440 < 720 ? 'am' : 'pm'
+  return `${h}:${m} ${ampm}`
+})
 
 const currentPage = ref(0)
 const viewportEl = ref(null)
@@ -40,7 +46,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="w-[71%] mx-auto mt-8" style="font-family: DM Sans, sans-serif">
+  <section class="w-[71%] mx-auto mt-8">
     <div class="flex justify-between items-start">
       <div>
         <h2 class="text-[26px] font-bold text-[#222] m-0">Stores to help you save</h2>

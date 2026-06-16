@@ -20,7 +20,6 @@
       aria-label="Search"
       placeholder="Search products and stores"
       class="flex-1 h-full border-0 bg-transparent text-[15px] outline-none text-black indent-[40px] pr-12 box-border placeholder:text-black max-md:text-[14px] max-md:indent-9 max-md:pr-9"
-      style="font-family: DM Sans, sans-serif"
     />
   </form>
 </template>

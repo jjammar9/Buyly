@@ -1,0 +1,5 @@
+<template>
+  <svg class="shrink-0 block" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="9 18 15 12 9 6"/>
+  </svg>
+</template>

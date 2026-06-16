@@ -2,7 +2,7 @@
   <section class="h-[30vh] bg-[#003d29] flex w-full">
     <div class="flex w-full max-w-[1152px] mx-auto gap-4">
       <div class="w-[40%] flex flex-col justify-center items-center px-10 py-5">
-        <h1 class="text-white text-[28px] font-bold leading-[1.2] mb-2 text-center" style="font-family: DM Sans, sans-serif">
+        <h1 class="text-white text-[28px] font-bold leading-[1.2] mb-2 text-center">
           <span style="white-space: nowrap">Order groceries for delivery or</span><br />pickup today
         </h1>
         <button
@@ -14,7 +14,6 @@
         <a
           href="#"
           class="text-[13px] text-[rgba(255,255,255,0.65)] block cursor-pointer underline mt-1 text-center"
-          style="font-family: DM Sans, sans-serif"
         >*Valid for first 3 orders. Service fees and terms apply.</a>
       </div>
       <div

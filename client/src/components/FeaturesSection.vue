@@ -22,7 +22,7 @@ const features = [
 </script>
 
 <template>
-  <section class="w-[71%] max-w-[1200px] mx-auto mt-[60px]" style="font-family: DM Sans, sans-serif">
+  <section class="w-[71%] max-w-[1200px] mx-auto mt-[60px]">
     <h2 class="text-[28px] font-bold text-[#222] text-center mb-10">Grocery delivery you can count on</h2>
     <div class="flex gap-6 justify-center">
       <div v-for="(feature, i) in features" :key="i" class="flex-1 max-w-[350px] flex flex-col items-center text-center">
