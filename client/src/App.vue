@@ -13,6 +13,3 @@ import FeaturesSection from './components/FeaturesSection.vue'
     <FeaturesSection />
   </div>
 </template>
-
-<style scoped>
-</style>

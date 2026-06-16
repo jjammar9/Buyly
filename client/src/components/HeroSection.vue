@@ -1,19 +1,24 @@
 <template>
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-left">
-        <h1 class="hero-heading">
+  <section class="h-[30vh] bg-[#003d29] flex w-full">
+    <div class="flex w-full max-w-[1152px] mx-auto gap-4">
+      <div class="w-[40%] flex flex-col justify-center items-center px-10 py-5">
+        <h1 class="text-white text-[28px] font-bold leading-[1.2] mb-2 text-center" style="font-family: DM Sans, sans-serif">
           <span style="white-space: nowrap">Order groceries for delivery or</span><br />pickup today
         </h1>
-        <button class="hero-btn" data-full-width="true">
+        <button
+          class="text-[18px] cursor-pointer select-none shadow-none bg-[#108910] border-0 rounded-[28px] text-white h-14 px-6 py-4 relative mt-3 mb-3"
+          data-full-width="true"
+        >
           <span>Sign up to get $0 delivery fee*</span>
         </button>
-        <a href="#" class="hero-terms"
-          >*Valid for first 3 orders. Service fees and terms apply.</a
-        >
+        <a
+          href="#"
+          class="text-[13px] text-[rgba(255,255,255,0.65)] block cursor-pointer underline mt-1 text-center"
+          style="font-family: DM Sans, sans-serif"
+        >*Valid for first 3 orders. Service fees and terms apply.</a>
       </div>
       <div
-        class="hero-right"
+        class="w-[60%] bg-left bg-no-repeat"
         :style="{ backgroundImage: `url(${heroBg})` }"
       ></div>
     </div>
@@ -23,71 +28,3 @@
 <script setup>
 import heroBg from "../assets/Hero.png";
 </script>
-
-<style scoped>
-.hero,
-.hero-inner {
-  height: 30vh;
-  background: #003d29;
-  display: flex;
-  width: 100%;
-}
-
-.hero-inner {
-  max-width: 1152px;
-  margin: 0 auto;
-  gap: 16px;
-}
-
-.hero-left {
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 40px;
-}
-.hero-right {
-  width: 60%;
-  background-position: left;
-  background-repeat: no-repeat;
-}
-
-.hero-heading {
-  color: #fff;
-  font-family: var(--font-sans);
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 8px;
-  text-align: center;
-}
-.hero-btn {
-  font-size: 18px;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  box-shadow: none;
-  background: #108910;
-  border: none;
-  border-radius: calc(56px / 2);
-  color: #FFFFFF;
-  height: 56px;
-  padding: 16px 24px;
-  position: relative;
-  margin-top: 12px;
-  margin-bottom: 12px;
-}
-.hero-terms {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.65);
-  font-family: var(--font-sans);
-  display: block;
-  cursor: pointer;
-  text-decoration: underline;
-  margin-top: 4px;
-  text-align: center;
-}
-</style>
