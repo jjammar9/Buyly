@@ -9,28 +9,19 @@ import BuylyLogo from '../assets/instacart-logo-color-6678cb82d531f8910d5ba270a1
         <div class="flex-1">
           <h4 class="text-[15px] font-bold text-[#222] mb-4">Get to know us</h4>
           <ul class="list-none p-0 m-0 flex flex-col gap-2">
-            <li><a href="#" class="text-[13px] text-[#555] no-underline hover:underline">About</a></li>
-            <li><a href="#" class="text-[13px] text-[#555] no-underline hover:underline">Careers</a></li>
-            <li><a href="#" class="text-[13px] text-[#555] no-underline hover:underline">Blog</a></li>
-            <li><a href="#" class="text-[13px] text-[#555] no-underline hover:underline">Press</a></li>
+            <li><router-link to="/about" class="text-[13px] text-[#555] no-underline hover:underline">About</router-link></li>
+            <li><router-link to="/careers" class="text-[13px] text-[#555] no-underline hover:underline">Careers</router-link></li>
+            <li><router-link to="/blog" class="text-[13px] text-[#555] no-underline hover:underline">Blog</router-link></li>
+            <li><router-link to="/press" class="text-[13px] text-[#555] no-underline hover:underline">Press</router-link></li>
           </ul>
         </div>
         <div class="flex-1">
-          <h4 class="text-[15px] font-bold text-[#222] mb-4">Let us help you</h4>
+          <h4 class="text-[15px] font-bold text-[#222] mb-4">More ways to shop</h4>
           <ul class="list-none p-0 m-0 flex flex-col gap-2">
-            <li><a href="#" class="text-[13px] text-[#555] no-underline hover:underline">Help center</a></li>
-            <li><a href="#" class="text-[13px] text-[#555] no-underline hover:underline">Returns & refunds</a></li>
-            <li><a href="#" class="text-[13px] text-[#555] no-underline hover:underline">Delivery & pickup</a></li>
-            <li><a href="#" class="text-[13px] text-[#555] no-underline hover:underline">Contact us</a></li>
-          </ul>
-        </div>
-        <div class="flex-1">
-          <h4 class="text-[15px] font-bold text-[#222] mb-4">More from Buyly</h4>
-          <ul class="list-none p-0 m-0 flex flex-col gap-2">
-            <li><a href="#" class="text-[13px] text-[#555] no-underline hover:underline">Gift cards</a></li>
-            <li><a href="#" class="text-[13px] text-[#555] no-underline hover:underline">Buyly+ membership</a></li>
-            <li><a href="#" class="text-[13px] text-[#555] no-underline hover:underline">Coupons & deals</a></li>
-            <li><a href="#" class="text-[13px] text-[#555] no-underline hover:underline">Accessibility</a></li>
+            <li><router-link to="/gift-cards" class="text-[13px] text-[#555] no-underline hover:underline">Gift cards</router-link></li>
+            <li><router-link to="/membership" class="text-[13px] text-[#555] no-underline hover:underline">Buyly+ membership</router-link></li>
+            <li><router-link to="/coupons" class="text-[13px] text-[#555] no-underline hover:underline">Coupons & deals</router-link></li>
+            <li><router-link to="/accessibility" class="text-[13px] text-[#555] no-underline hover:underline">Accessibility</router-link></li>
           </ul>
         </div>
       </div>

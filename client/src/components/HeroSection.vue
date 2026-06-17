@@ -5,12 +5,11 @@
         <h1 class="text-white text-[28px] font-bold leading-[1.2] mb-2 text-center">
           <span style="white-space: nowrap">Order groceries for delivery or</span><br />pickup today
         </h1>
-        <button
-          class="text-[18px] cursor-pointer select-none shadow-none bg-[#108910] border-0 rounded-[28px] text-white h-14 px-6 py-4 relative mt-3 mb-3"
-          data-full-width="true"
+        <a href="/catalog"
+          class="text-[18px] cursor-pointer select-none shadow-none bg-[#108910] border-0 rounded-[28px] text-white h-14 px-6 py-4 relative mt-3 mb-3 no-underline flex items-center justify-center"
         >
           <span>Sign up to get $0 delivery fee*</span>
-        </button>
+        </a>
         <a
           href="#"
           class="text-[13px] text-[rgba(255,255,255,0.65)] block cursor-pointer underline mt-1 text-center"

@@ -1,8 +1,18 @@
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const query = ref('')
+
+function submit() {
+  const q = query.value.trim()
+  router.push(q ? `/catalog?search=${encodeURIComponent(q)}` : '/catalog')
+}
+</script>
+
 <template>
-  <form
-    role="search"
-    class="relative flex items-center w-full h-12 bg-[#f6f6f6] border-[0.5px] border-[#999] rounded-[28px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)] focus-within:bg-white max-md:h-10"
-  >
+  <form role="search" class="relative flex items-center w-full h-12 bg-[#f6f6f6] border-[0.5px] border-[#999] rounded-[28px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)] focus-within:bg-white max-md:h-10" @submit.prevent="submit">
     <button
       type="submit"
       aria-label="Search"
@@ -13,6 +23,7 @@
       </svg>
     </button>
     <input
+      v-model="query"
       id="search-bar-input"
       autocomplete="off"
       autocorrect="off"
