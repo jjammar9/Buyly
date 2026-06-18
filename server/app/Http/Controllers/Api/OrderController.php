@@ -70,4 +70,19 @@ class OrderController extends Controller
         }
         return $order->load('items');
     }
+
+    public function progress(Request $request, Order $order)
+    {
+        if ($order->user_id !== $request->user()->id) abort(403);
+
+        $next = ['confirmed' => 'preparing', 'preparing' => 'shipped', 'shipped' => 'delivered'];
+
+        if (!isset($next[$order->status])) {
+            return response()->json(['message' => 'Order already delivered'], 400);
+        }
+
+        $order->update(['status' => $next[$order->status]]);
+
+        return $order->load('items');
+    }
 }

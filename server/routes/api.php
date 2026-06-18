@@ -17,6 +17,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('orders', [OrderController::class, 'index']);
     Route::post('orders', [OrderController::class, 'store']);
     Route::get('orders/{order}', [OrderController::class, 'show']);
+    Route::patch('orders/{order}/progress', [OrderController::class, 'progress']);
     Route::get('cart', [CartController::class, 'index']);
     Route::post('cart/add', [CartController::class, 'add']);
     Route::put('cart/product/{productId}', [CartController::class, 'update']);

@@ -42,6 +42,9 @@ export function getOrders() {
 export function getOrder(id) {
   return request(`/orders/${id}`)
 }
+export function progressOrder(id) {
+  return request(`/orders/${id}/progress`, { method: 'PATCH' })
+}
 export function createOrder(data) {
   return request('/orders', { method: 'POST', body: JSON.stringify(data) })
 }

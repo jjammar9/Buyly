@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getOrders, createOrder } from '../api.js'
+import { getOrders, createOrder, progressOrder } from '../api.js'
 import { useCart } from '../stores/cart.js'
 import { useToast } from '../stores/toast.js'
 import NavBar from '../components/NavBar.vue'
@@ -39,6 +39,17 @@ async function load() {
     orders.value = await getOrders()
   }
   loading.value = false
+}
+
+async function advanceOrder(order) {
+  try {
+    const updated = await progressOrder(order.id)
+    const idx = orders.value.findIndex(o => o.id === order.id)
+    if (idx !== -1) orders.value[idx] = updated
+    show(`Order status: ${updated.status}`)
+  } catch (e) {
+    show(e.message || 'Cannot progress further', 'error')
+  }
 }
 
 async function placeOrder() {
@@ -95,6 +106,7 @@ async function placeOrder() {
               <div class="flex items-center gap-3">
                 <span v-if="order.delivery_eta" class="text-[12px] text-[#888]">ETA {{ new Date(order.delivery_eta).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) }}</span>
                 <span class="text-[12px] font-semibold uppercase px-2.5 py-1 rounded-full" :class="statusClass(order.status)">{{ order.status }}</span>
+                <button v-if="order.status !== 'delivered'" class="text-[11px] text-[#0a8a4a] bg-transparent border border-[#0a8a4a] rounded-full px-2.5 py-0.5 cursor-pointer hover:bg-[#0a8a4a] hover:text-white transition-colors" @click="advanceOrder(order)">Simulate &rarr;</button>
               </div>
             </div>
             <div class="flex gap-1 mb-3">
