@@ -31,7 +31,7 @@ const { show } = useToast()
             <div class="text-[13px] text-[#888]">{{ item.unit }}</div>
           </div>
           <div class="flex items-center gap-3">
-            <button class="w-8 h-8 rounded-full border border-[#ddd] bg-white text-[16px] cursor-pointer flex items-center justify-center" @click="updateQty(item.id, item.qty - 1)">-</button>
+            <button class="w-8 h-8 rounded-full border border-[#ddd] bg-white text-[16px] cursor-pointer flex items-center justify-center" @click="item.qty === 1 ? remove(item.id) : updateQty(item.id, item.qty - 1)">-</button>
             <span class="text-[15px] font-semibold w-6 text-center">{{ item.qty }}</span>
             <button class="w-8 h-8 rounded-full border border-[#ddd] bg-white text-[16px] cursor-pointer flex items-center justify-center" @click="updateQty(item.id, item.qty + 1)">+</button>
           </div>

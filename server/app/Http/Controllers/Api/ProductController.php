@@ -23,7 +23,7 @@ class ProductController extends Controller
             $query->whereHas('category', fn ($q) => $q->where('slug', $category));
         }
 
-        $perPage = min((int) $request->input('per_page', 20), 50);
+        $perPage = max(1, min((int) $request->input('per_page', 20), 50));
 
         $sort = $request->input('sort', 'newest');
         match ($sort) {
@@ -42,12 +42,17 @@ class ProductController extends Controller
         return Product::with('category')
             ->where('is_featured', true)
             ->where('in_stock', true)
-            ->latest()
+            ->inRandomOrder()
+            ->limit(8)
             ->get();
     }
 
     public function show(string $slug)
     {
-        return Product::where('slug', $slug)->with('category')->firstOrFail();
+        $product = Product::with('category')->whereSlug($slug)->first();
+        if (!$product) {
+            return response()->json(['message' => 'Product not found'], 404);
+        }
+        return $product;
     }
 }

@@ -2,7 +2,8 @@ import { reactive, computed } from 'vue'
 import { addToCart as apiAddToCart, updateCartItem as apiUpdateCartItem, removeFromCart as apiRemoveFromCart, clearCart as apiClearCart, getCart as apiGetCart } from '../api.js'
 
 const key = 'buyly_cart'
-const saved = JSON.parse(localStorage.getItem(key) || '[]')
+let saved
+try { saved = JSON.parse(localStorage.getItem(key) || '[]') } catch { saved = [] }
 
 const items = reactive(saved)
 
@@ -43,11 +44,12 @@ export function useCart() {
   }
 
   function updateQty(productId, qty) {
+    const clamped = Math.max(1, qty)
     const item = items.find(i => i.id === productId)
-    if (item) { item.qty = Math.max(1, qty); save() }
+    if (item) { item.qty = clamped; save() }
     const token = localStorage.getItem('token')
     if (token) {
-      apiUpdateCartItem(productId, qty).catch(() => {})
+      apiUpdateCartItem(productId, clamped).catch(() => {})
     }
   }
 

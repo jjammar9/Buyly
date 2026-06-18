@@ -17,19 +17,27 @@ const related = ref([])
 const loading = ref(true)
 const added = ref(false)
 const qty = ref(1)
+const error = ref('')
 
 onMounted(load)
 
 async function load() {
   loading.value = true
-  product.value = await getProduct(route.params.slug)
-  const data = await getProducts({ category: product.value.category?.slug, per_page: 5 })
-  related.value = data.data.filter(p => p.id !== product.value.id).slice(0, 4)
+  error.value = ''
+  try {
+    product.value = await getProduct(route.params.slug)
+    const params = { per_page: 5 }
+    if (product.value.category?.slug) params.category = product.value.category.slug
+    const data = await getProducts(params)
+    related.value = data.data.filter(p => p.id !== product.value.id).slice(0, 4)
+  } catch (e) {
+    error.value = e.message || 'Failed to load product'
+  }
   loading.value = false
 }
 
 function add() {
-  for (let i = 0; i < qty.value; i++) addToCart(product.value)
+  addToCart(product.value)
   show(`${product.value.name} added to cart`)
   added.value = true
   setTimeout(() => { added.value = false }, 2000)
@@ -52,6 +60,7 @@ function add() {
         </div>
       </div>
 
+      <div v-else-if="error" class="text-center py-20 text-[#c00]">{{ error }}</div>
       <div v-else-if="product" class="flex gap-10 max-md:flex-col">
         <div class="w-1/2 max-md:w-full">
           <img :src="product.image" :alt="product.name" class="w-full h-[400px] object-contain bg-[#f9f9f9] rounded-xl" />

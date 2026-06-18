@@ -1,13 +1,16 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { getProducts } from '../api.js'
 
 const router = useRouter()
+const route = useRoute()
 const query = ref('')
 const suggestions = ref([])
 const show = ref(false)
 let timer = null
+
+watch(() => route.path, () => { show.value = false; query.value = '' })
 
 watch(query, (val) => {
   clearTimeout(timer)

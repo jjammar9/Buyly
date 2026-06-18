@@ -76,6 +76,8 @@ class AuthController extends Controller
             $data['password'] = Hash::make($data['password']);
         }
 
+        unset($data['current_password'], $data['password_confirmation']);
+
         $user->update($data);
 
         return response()->json(['user' => $user->fresh()]);

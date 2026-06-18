@@ -41,6 +41,7 @@ async function handleLogout() { await logout(); show('Logged out'); router.push(
                 <span v-if="count > 0" class="ml-0.5 bg-[#0a8a4a] text-white text-[10px] font-bold min-w-[18px] h-[18px] rounded-full inline-flex items-center justify-center px-1">{{ count > 99 ? '99+' : count }}</span>
               </router-link>
               <router-link to="/help" class="px-3 py-1.5 text-[14px] text-[#444] no-underline rounded-lg hover:bg-[#e8e6e1] hover:text-[#166534] font-medium max-md:hidden transition-colors">Help</router-link>
+              <router-link to="/orders" class="px-3 py-1.5 text-[14px] text-[#444] no-underline rounded-lg hover:bg-[#e8e6e1] hover:text-[#166534] font-medium max-md:hidden transition-colors">Orders</router-link>
             </template>
             <button
               aria-label="Search"

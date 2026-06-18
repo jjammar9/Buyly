@@ -53,6 +53,10 @@ async function advanceOrder(order) {
 }
 
 async function placeOrder() {
+  if (!address.value.line1.trim() || !address.value.city.trim() || !address.value.state.trim() || !address.value.zip.trim()) {
+    show('Please fill in all required address fields', 'error')
+    return
+  }
   submitting.value = true
   try {
     await createOrder({
@@ -116,7 +120,7 @@ async function placeOrder() {
               </div>
             </div>
             <div class="text-[12px] text-[#888] mb-3 text-center">Placed {{ new Date(order.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) }} &middot; ETA {{ order.delivery_eta ? new Date(order.delivery_eta).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) : 'Calculating...' }}</div>
-            <div v-for="item in order.items" :key="item.id" class="flex items-center gap-3 py-2 text-[14px] border-b border-[#f0f0f0] last:border-0">
+            <div v-for="item in order.items" :key="item.id" class="flex items-center gap-3 py-2 text-[14px]">
               <div class="w-9 h-9 rounded-lg overflow-hidden bg-[#f5f5f5] shrink-0">
                 <img :src="item.product_image" :alt="item.product_name" class="w-full h-full object-cover" />
               </div>

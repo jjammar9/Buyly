@@ -5,6 +5,9 @@ async function request(path, opts = {}) {
   const headers = { 'Content-Type': 'application/json', Accept: 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}), ...opts.headers }
   const res = await fetch(`${BASE}${path}`, { ...opts, headers })
   if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('token')
+    }
     const body = await res.json().catch(() => ({}))
     throw new Error(body.message || `Request failed: ${res.status}`)
   }

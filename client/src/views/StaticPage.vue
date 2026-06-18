@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useToast } from '../stores/toast'
 import NavBar from '../components/NavBar.vue'
 import FooterSection from '../components/FooterSection.vue'
 import deliveryTruck from '../assets/delivery_truck-BvY4lSkI.svg'
@@ -171,12 +172,18 @@ const categories = [
 
 const email = ref('')
 const subscribed = ref(false)
+const toast = useToast()
 
 function subscribe() {
   if (email.value.trim()) {
     subscribed.value = true
     email.value = ''
+    toast.show('Subscribed successfully!', 'success')
   }
+}
+
+function showToast(msg, type = 'success') {
+  toast.show(msg, type)
 }
 </script>
 
@@ -222,7 +229,7 @@ function subscribe() {
           </div>
           <input type="text" placeholder="Subject" class="w-full h-12 px-4 border border-[#ddd] rounded-lg text-[15px] outline-none focus:border-[#0a8a4a]" />
           <textarea placeholder="How can we help you?" class="w-full h-32 px-4 py-3 border border-[#ddd] rounded-lg text-[15px] outline-none focus:border-[#0a8a4a] resize-none"></textarea>
-          <button type="submit" class="h-12 px-8 bg-[#0a8a4a] text-white text-[15px] font-semibold rounded-lg border-0 cursor-pointer hover:bg-[#097a42]">Submit</button>
+          <button type="submit" class="h-12 px-8 bg-[#0a8a4a] text-white text-[15px] font-semibold rounded-lg border-0 cursor-pointer hover:bg-[#097a42]" @click.prevent="showToast('Message sent! We\'ll get back to you soon.', 'success')">Submit</button>
         </form>
       </div>
     </div>
@@ -234,7 +241,7 @@ function subscribe() {
           <div v-if="subscribed" class="text-[#166534] font-semibold text-[16px]">Thanks for subscribing!</div>
           <form v-else class="flex gap-3 max-w-[480px] mx-auto max-md:flex-col" @submit.prevent="subscribe">
             <input v-model="email" type="email" placeholder="Enter your email" class="flex-1 h-12 px-4 border border-[#ddd] rounded-lg text-[15px] outline-none focus:border-[#0a8a4a]" />
-            <button type="submit" class="h-12 px-6 bg-[#0a8a4a] text-white text-[15px] font-semibold rounded-lg border-0 cursor-pointer hover:bg-[#097a42] whitespace-nowrap">Subscribe</button>
+            <button type="submit" class="h-12 px-6 bg-[#0a8a4a] text-white text-[15px] font-semibold rounded-lg border-0 cursor-pointer hover:bg-[#097a42] whitespace-nowrap" @click.prevent="showToast('Subscribed successfully!', 'success')">Subscribe</button>
           </form>
         </div>
       </section>

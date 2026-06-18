@@ -35,9 +35,16 @@ const routes = [
   { path: '/product/:slug', name: 'product', component: ProductView },
   { path: '/checkout', name: 'checkout', component: CheckoutView, meta: { requiresAuth: true } },
   { path: '/orders', name: 'orders', component: CheckoutView, meta: { requiresAuth: true } },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('./views/NotFoundView.vue') },
 ]
 
-const router = createRouter({ history: createWebHistory(), routes })
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+  scrollBehavior() {
+    return { top: 0 }
+  }
+})
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')

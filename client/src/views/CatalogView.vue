@@ -19,17 +19,23 @@ const currentPage = ref(1)
 const searchQuery = ref(route.query.search || '')
 const selectedCategory = ref(route.params.category || '')
 const loading = ref(false)
+const error = ref('')
 
 const sortBy = ref(route.query.sort || 'newest')
 
 async function loadProducts() {
   loading.value = true
-  const params = { page: currentPage.value, per_page: 20, sort: sortBy.value }
-  if (selectedCategory.value) params.category = selectedCategory.value
-  if (searchQuery.value) params.search = searchQuery.value
-  const data = await getProducts(params)
-  products.value = data.data
-  totalPages.value = data.last_page
+  error.value = ''
+  try {
+    const params = { page: currentPage.value, per_page: 20, sort: sortBy.value }
+    if (selectedCategory.value) params.category = selectedCategory.value
+    if (searchQuery.value) params.search = searchQuery.value
+    const data = await getProducts(params)
+    products.value = data.data
+    totalPages.value = data.last_page
+  } catch (e) {
+    error.value = e.message || 'Failed to load products'
+  }
   loading.value = false
 }
 
@@ -59,7 +65,9 @@ watch(() => route.query.search, (q) => {
 })
 
 onMounted(async () => {
-  categories.value = await getCategories()
+  try {
+    categories.value = await getCategories()
+  } catch {}
   loadProducts()
 })
 </script>
@@ -118,6 +126,7 @@ onMounted(async () => {
         </div>
       </div>
 
+      <div v-else-if="error" class="text-center py-16 text-[#c00]">{{ error }}</div>
       <div v-else-if="products.length === 0" class="flex flex-col items-center justify-center py-20 text-center">
         <div class="w-20 h-20 rounded-full bg-[#f7f5f0] flex items-center justify-center mb-5">
           <svg width="34" height="34" viewBox="0 0 24 24" fill="#ccc"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>

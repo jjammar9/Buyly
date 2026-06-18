@@ -87,6 +87,12 @@ async function save() {
         <button type="submit" :disabled="saving" class="h-12 w-full bg-[#0a8a4a] text-white text-[15px] font-semibold rounded-lg border-0 cursor-pointer hover:bg-[#097a42] disabled:opacity-50">
           {{ saving ? 'Saving...' : 'Save changes' }}
         </button>
+      <hr class="border-t border-[#eee] my-2" />
+        <p class="text-[14px] font-medium text-[#555] m-0 mb-3">Your orders</p>
+        <router-link to="/orders" class="inline-flex items-center gap-2 h-12 px-5 bg-white text-[#166534] border border-[#166534] text-[14px] font-semibold rounded-lg no-underline hover:bg-[#166534] hover:text-white transition-colors w-fit">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          View order history
+        </router-link>
       </form>
     </div>
     <FooterSection />
