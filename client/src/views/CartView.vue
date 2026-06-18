@@ -30,7 +30,7 @@ const { items, remove, updateQty, total, clear } = useCart()
           <div class="text-[20px] font-bold text-[#222]">Total: ${{ total.toFixed(2) }}</div>
           <div class="flex gap-3">
             <button class="px-6 py-3 border border-[#ddd] rounded-lg bg-white text-[14px] cursor-pointer" @click="clear">Clear</button>
-            <button class="px-6 py-3 bg-[#0a8a4a] text-white text-[14px] font-semibold rounded-lg border-0 cursor-pointer hover:bg-[#097a42]">Checkout</button>
+            <router-link to="/checkout" class="px-6 py-3 bg-[#0a8a4a] text-white text-[14px] font-semibold rounded-lg border-0 cursor-pointer hover:bg-[#097a42] no-underline inline-block">Checkout</router-link>
           </div>
         </div>
       </div>

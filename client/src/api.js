@@ -35,3 +35,13 @@ export function getUser() {
 export function updateUser(data) {
   return request('/user', { method: 'PUT', body: JSON.stringify(data) })
 }
+
+export function getOrders() {
+  return request('/orders')
+}
+export function getOrder(id) {
+  return request(`/orders/${id}`)
+}
+export function createOrder(data) {
+  return request('/orders', { method: 'POST', body: JSON.stringify(data) })
+}

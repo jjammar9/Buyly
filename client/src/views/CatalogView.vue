@@ -16,14 +16,17 @@ const totalPages = ref(1)
 const currentPage = ref(1)
 const searchQuery = ref(route.query.search || '')
 const selectedCategory = ref(route.params.category || '')
+const loading = ref(false)
 
 async function loadProducts() {
+  loading.value = true
   const params = { page: currentPage.value, per_page: 20 }
   if (selectedCategory.value) params.category = selectedCategory.value
   if (searchQuery.value) params.search = searchQuery.value
   const data = await getProducts(params)
   products.value = data.data
   totalPages.value = data.last_page
+  loading.value = false
 }
 
 function selectCategory(slug) {
@@ -86,12 +89,25 @@ onMounted(async () => {
         >{{ cat.name }}</button>
       </div>
 
-      <div v-if="products.length === 0" class="text-center text-[#888] py-16 text-[16px]">
+      <div v-if="loading" class="grid grid-cols-4 gap-5 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
+        <div v-for="i in 8" :key="i" class="border border-[#e0e0e0] rounded-xl p-4 bg-white flex flex-col">
+          <div class="h-[160px] bg-[#f0f0f0] rounded-lg mb-3 animate-pulse" />
+          <div class="h-3 bg-[#f0f0f0] rounded w-1/3 mb-2 animate-pulse" />
+          <div class="h-4 bg-[#f0f0f0] rounded w-3/4 mb-2 animate-pulse" />
+          <div class="h-3 bg-[#f0f0f0] rounded w-1/4 mb-3 animate-pulse" />
+          <div class="flex items-center justify-between mt-auto">
+            <div class="h-5 bg-[#f0f0f0] rounded w-1/4 animate-pulse" />
+            <div class="w-9 h-9 rounded-full bg-[#f0f0f0] animate-pulse" />
+          </div>
+        </div>
+      </div>
+
+      <div v-else-if="products.length === 0" class="text-center text-[#888] py-16 text-[16px]">
         No products found.
       </div>
 
       <div v-else class="grid grid-cols-4 gap-5 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
-        <div v-for="p in products" :key="p.id" class="border border-[#e0e0e0] rounded-xl p-4 bg-white flex flex-col">
+        <div v-for="p in products" :key="p.id" class="border border-[#e0e0e0] rounded-xl p-4 bg-white flex flex-col cursor-pointer hover:shadow-md transition-shadow" @click="router.push(`/product/${p.slug}`)">
           <div class="h-[160px] bg-[#f5f5f5] rounded-lg mb-3 flex items-center justify-center text-[40px] text-[#ccc]">
             <svg v-if="!p.image" width="48" height="48" viewBox="0 0 24 24" fill="#ddd"><path d="M3 3h18v18H3z"/></svg>
             <img v-else :src="p.image" :alt="p.name" class="max-w-full max-h-full object-contain" />
@@ -104,7 +120,7 @@ onMounted(async () => {
               <span v-if="p.sale_price" class="text-[18px] font-bold text-[#166534]">${{ p.sale_price }}</span>
               <span :class="p.sale_price ? 'text-[13px] text-[#888] line-through ml-1' : 'text-[18px] font-bold text-[#222]'">${{ p.price }}</span>
             </div>
-            <button class="w-9 h-9 rounded-full bg-[#0a8a4a] text-white border-0 cursor-pointer flex items-center justify-center hover:bg-[#097a42]" @click="addToCart(p)">+</button>
+            <button class="w-9 h-9 rounded-full bg-[#0a8a4a] text-white border-0 cursor-pointer flex items-center justify-center hover:bg-[#097a42]" @click.stop="addToCart(p)">+</button>
           </div>
         </div>
       </div>

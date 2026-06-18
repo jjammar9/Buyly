@@ -7,6 +7,8 @@ import RegisterView from './views/RegisterView.vue'
 
 import ProfileView from './views/ProfileView.vue'
 import StaticPage from './views/StaticPage.vue'
+import ProductView from './views/ProductView.vue'
+import CheckoutView from './views/CheckoutView.vue'
 
 const routes = [
   { path: '/', name: 'home', component: HomeView },
@@ -30,7 +32,17 @@ const routes = [
   { path: '/accessibility', name: 'accessibility', component: StaticPage },
   { path: '/more-ways-to-shop', name: 'more-ways-to-shop', component: StaticPage },
   { path: '/categories', name: 'categories', component: StaticPage },
+  { path: '/product/:slug', name: 'product', component: ProductView },
+  { path: '/checkout', name: 'checkout', component: CheckoutView, meta: { requiresAuth: true } },
+  { path: '/orders', name: 'orders', component: CheckoutView, meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({ history: createWebHistory(), routes })
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  if (to.meta.requiresAuth && !token) next({ name: 'login', query: { redirect: to.fullPath } })
+  else next()
+})
+
 export default router

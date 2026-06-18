@@ -1,8 +1,9 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import NavBar from '../components/NavBar.vue'
 import FooterSection from '../components/FooterSection.vue'
+import deliveryTruck from '../assets/delivery_truck-BvY4lSkI.svg'
 
 const route = useRoute()
 
@@ -154,6 +155,29 @@ const pages = {
 
 const slug = computed(() => route.name || 'about')
 const page = computed(() => pages[slug.value] || pages.about)
+
+const categories = [
+  { name: 'Fruits & Vegetables', slug: 'fruits-vegetables', image: 'https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=120&h=120&fit=crop&auto=format', count: 19 },
+  { name: 'Meat & Seafood', slug: 'meat-seafood', image: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=120&h=120&fit=crop&auto=format', count: 12 },
+  { name: 'Dairy & Eggs', slug: 'dairy-eggs', image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=120&h=120&fit=crop&auto=format', count: 10 },
+  { name: 'Bakery', slug: 'bakery', image: 'https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=120&h=120&fit=crop&auto=format', count: 8 },
+  { name: 'Beverages', slug: 'beverages', image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=120&h=120&fit=crop&auto=format', count: 8 },
+  { name: 'Snacks', slug: 'snacks', image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=120&h=120&fit=crop&auto=format', count: 8 },
+  { name: 'Frozen', slug: 'frozen', image: 'https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=120&h=120&fit=crop&auto=format', count: 8 },
+  { name: 'Pantry Staples', slug: 'pantry-staples', image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=120&h=120&fit=crop&auto=format', count: 10 },
+  { name: 'Household', slug: 'household', image: 'https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=120&h=120&fit=crop&auto=format', count: 8 },
+  { name: 'Personal Care', slug: 'personal-care', image: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=120&h=120&fit=crop&auto=format', count: 9 },
+]
+
+const email = ref('')
+const subscribed = ref(false)
+
+function subscribe() {
+  if (email.value.trim()) {
+    subscribed.value = true
+    email.value = ''
+  }
+}
 </script>
 
 <template>
@@ -161,19 +185,81 @@ const page = computed(() => pages[slug.value] || pages.about)
     <NavBar />
     <div class="relative h-[350px] overflow-hidden">
       <img :src="page.hero" :alt="page.title" class="w-full h-full object-cover" />
-      <div :class="page.textLight !== false ? 'bg-black/40' : 'bg-white/80'" class="absolute inset-0 flex items-center justify-center">
+      <div :class="slug === 'categories' ? 'bg-[#1a1a2e]/70' : page.textLight !== false ? 'bg-black/40' : 'bg-white/80'" class="absolute inset-0 flex items-center justify-center">
         <div class="text-center px-6">
           <h1 v-if="page.title" :class="page.textLight !== false ? 'text-white' : 'text-[#222]'" class="text-[42px] font-bold mb-3">{{ page.title }}</h1>
           <p :class="page.textLight !== false ? 'text-white/80' : 'text-[#444]'" class="text-[17px] max-w-[600px] mx-auto leading-relaxed">{{ page.subtitle }}</p>
         </div>
       </div>
     </div>
-    <div class="w-[71%] max-w-[900px] mx-auto py-14">
+    <div v-if="slug === 'categories'" class="w-[75%] max-w-[1200px] mx-auto py-14">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <router-link v-for="cat in categories" :key="cat.slug" :to="`/catalog?category=${cat.slug}`" class="group relative flex items-center gap-4 p-4 rounded-xl border border-[#eee] bg-white no-underline hover:border-[#ddd] hover:shadow-sm transition-all duration-200">
+          <div class="w-14 h-14 rounded-xl overflow-hidden shrink-0 bg-[#fafafa]">
+            <img :src="cat.image" :alt="cat.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+          </div>
+          <div class="flex-1 min-w-0">
+            <span class="text-[14px] font-medium text-[#222] block truncate group-hover:text-[#fb923c] transition-colors">{{ cat.name }}</span>
+            <span class="text-[12px] text-[#999]">{{ cat.count }} products</span>
+          </div>
+          <svg class="size-4 text-[#ccc] group-hover:text-[#fb923c] group-hover:translate-x-0.5 transition-all shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </router-link>
+      </div>
+    </div>
+
+    <div v-else class="w-[71%] max-w-[900px] mx-auto py-14">
       <div v-for="(section, i) in page.sections" :key="i" class="mb-10 last:mb-0">
         <h2 class="text-[24px] font-bold text-[#222] mb-3">{{ section.heading }}</h2>
         <p class="text-[16px] text-[#444] leading-relaxed whitespace-pre-line">{{ section.text }}</p>
       </div>
+
+      <div v-if="slug === 'help'" class="mt-14 pt-10 border-t border-[#e0e0e0]">
+        <h2 class="text-[24px] font-bold text-[#222] mb-6">Send us a message</h2>
+        <form class="space-y-4" @submit.prevent>
+          <div class="flex gap-4 max-md:flex-col">
+            <input type="text" placeholder="Your name" class="flex-1 h-12 px-4 border border-[#ddd] rounded-lg text-[15px] outline-none focus:border-[#0a8a4a]" />
+            <input type="email" placeholder="Your email" class="flex-1 h-12 px-4 border border-[#ddd] rounded-lg text-[15px] outline-none focus:border-[#0a8a4a]" />
+          </div>
+          <input type="text" placeholder="Subject" class="w-full h-12 px-4 border border-[#ddd] rounded-lg text-[15px] outline-none focus:border-[#0a8a4a]" />
+          <textarea placeholder="How can we help you?" class="w-full h-32 px-4 py-3 border border-[#ddd] rounded-lg text-[15px] outline-none focus:border-[#0a8a4a] resize-none"></textarea>
+          <button type="submit" class="h-12 px-8 bg-[#0a8a4a] text-white text-[15px] font-semibold rounded-lg border-0 cursor-pointer hover:bg-[#097a42]">Submit</button>
+        </form>
+      </div>
     </div>
+    <template v-if="slug === 'categories'">
+      <section class="bg-[#f7f5f0] py-14 my-12">
+        <div class="w-[71%] max-w-[900px] mx-auto text-center">
+          <h2 class="text-[28px] font-bold text-[#222] mb-3">Stay in the loop</h2>
+          <p class="text-[15px] text-[#555] mb-6 max-w-[500px] mx-auto">Sign up for exclusive deals, new arrivals, and delivery tips.</p>
+          <div v-if="subscribed" class="text-[#166534] font-semibold text-[16px]">Thanks for subscribing!</div>
+          <form v-else class="flex gap-3 max-w-[480px] mx-auto max-md:flex-col" @submit.prevent="subscribe">
+            <input v-model="email" type="email" placeholder="Enter your email" class="flex-1 h-12 px-4 border border-[#ddd] rounded-lg text-[15px] outline-none focus:border-[#0a8a4a]" />
+            <button type="submit" class="h-12 px-6 bg-[#0a8a4a] text-white text-[15px] font-semibold rounded-lg border-0 cursor-pointer hover:bg-[#097a42] whitespace-nowrap">Subscribe</button>
+          </form>
+        </div>
+      </section>
+      <section class="py-16">
+        <div class="w-[75%] max-w-[1100px] mx-auto flex items-stretch rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+          <div class="flex-1 flex flex-col justify-center px-10 py-12">
+            <h2 class="text-[30px] font-bold text-[#222] leading-[1.2] mb-4">Get fresh groceries<br />in minutes</h2>
+            <p class="text-[15px] text-[#555] leading-relaxed mb-6 max-w-[420px]">Download the Instacart app for exclusive deals, real-time tracking, and the freshest selection delivered right to your door.</p>
+            <div class="flex gap-3">
+              <a href="#" class="inline-flex items-center gap-2 h-12 px-5 bg-[#222] text-white rounded-lg no-underline text-[14px] font-semibold hover:bg-[#333]">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                App Store
+              </a>
+              <a href="#" class="inline-flex items-center gap-2 h-12 px-5 bg-[#222] text-white rounded-lg no-underline text-[14px] font-semibold hover:bg-[#333]">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zM3.5 2.5v19l10-9.5zM14.5 12l-3.5 3.5L17.5 19l5-5zM17.5 5l-6.5 3.5L14.5 12l5-5z"/></svg>
+                Google Play
+              </a>
+            </div>
+          </div>
+          <div class="w-[45%] bg-[#166534] flex items-center justify-center p-8 max-md:hidden">
+            <img :src="deliveryTruck" alt="Delivery" class="w-full h-auto" />
+          </div>
+        </div>
+      </section>
+    </template>
     <FooterSection />
   </div>
 </template>

@@ -46,55 +46,62 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="w-[71%] mx-auto mt-8">
-    <div class="flex justify-between items-start">
+  <section class="w-[71%] mx-auto mt-16 mb-8">
+    <div class="flex justify-between items-end mb-8">
       <div>
-        <h2 class="text-[26px] font-bold text-[#222] m-0">Stores to help you save</h2>
-        <p class="text-[13px] text-[#888] mt-1 m-0">Offers subject to terms and eligibility</p>
+        <span class="text-[12px] font-semibold text-[#fb923c] uppercase tracking-[0.12em]">Partner Stores</span>
+        <h2 class="text-[30px] font-bold text-[#222] m-0 mt-1">Stores to help you save</h2>
+        <p class="text-[14px] text-[#777] mt-1.5 m-0 max-w-[480px]">Shop from top-rated local stores and national retailers — all in one place.</p>
       </div>
-      <div class="flex gap-2 mt-1">
+      <div class="flex gap-2">
         <button
           :disabled="currentPage === 0"
-          class="flex items-center justify-center w-9 h-9 border border-[#ddd] bg-white rounded-full cursor-pointer disabled:opacity-30 disabled:cursor-default hover:bg-[#f5f5f5] transition-colors duration-150"
+          class="flex items-center justify-center w-11 h-11 bg-white rounded-full border border-[#e8e8e8] cursor-pointer disabled:opacity-25 disabled:cursor-default hover:bg-[#f7f5f0] hover:border-[#d0d0d0] transition-all duration-150 shadow-sm"
           @click="scrollLeft"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="15 18 9 12 15 6"/>
           </svg>
         </button>
         <button
           :disabled="currentPage >= totalPages - 1"
-          class="flex items-center justify-center w-9 h-9 border border-[#ddd] bg-white rounded-full cursor-pointer disabled:opacity-30 disabled:cursor-default hover:bg-[#f5f5f5] transition-colors duration-150"
+          class="flex items-center justify-center w-11 h-11 bg-white rounded-full border border-[#e8e8e8] cursor-pointer disabled:opacity-25 disabled:cursor-default hover:bg-[#f7f5f0] hover:border-[#d0d0d0] transition-all duration-150 shadow-sm"
           @click="scrollRight"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"/>
           </svg>
         </button>
       </div>
     </div>
-    <div ref="viewportEl" class="overflow-hidden pt-5">
-      <div class="flex gap-3 transition-transform duration-300 ease-in-out" :style="{ transform: `translateX(${offset}px)` }">
+
+    <div ref="viewportEl" class="overflow-hidden">
+      <div class="flex gap-4 transition-transform duration-300 ease-in-out" :style="{ transform: `translateX(${offset}px)` }">
         <div
           v-for="(logo, i) in allLogos"
           :key="i"
-          class="shrink-0 w-[120px] flex flex-col items-center"
+          class="shrink-0 w-[140px]"
         >
-          <div class="relative w-[120px] h-[90px] flex items-center justify-center border border-[rgba(0,0,0,0.12)] rounded-lg bg-white p-2.5">
-            <div v-if="i % 5 === 0 || i % 7 === 0" class="absolute top-[-20px] right-[-8px] w-14 h-14 z-[1] flex items-center justify-center" style="transform: rotate(-12deg); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2))">
-              <svg viewBox="0 0 56 64" class="absolute top-0 left-0 w-full h-full block pointer-events-none">
-                <path d="m25.36 58.016-6.14 4.569-.6-7.687-7.18 2.634 1.566-7.561-7.628.498 3.602-6.803-7.438-1.695 5.355-5.49-6.678-3.762 6.678-3.762-5.359-5.49 7.442-1.695-3.602-6.803 7.628.498-1.567-7.562 7.184 2.634.596-7.686 6.14 4.569L28.092.219l4.628 6.152L37.344.219l2.731 7.203 6.14-4.57.6 7.687L54 7.905l-1.567 7.562 7.625-.498-3.602 6.803 7.442 1.694-5.359 5.491 6.681 3.762-6.68 3.761 5.358 5.491-7.442 1.695 3.602 6.803-7.625-.498 1.564 7.561-7.18-2.634-.6 7.687-6.14-4.57-2.732 7.204-4.625-6.152-4.628 6.152z" fill="#FFCC00" stroke="#fff" stroke-width="2.5" stroke-linejoin="round" />
-              </svg>
-              <span class="relative text-[9px] font-black text-[#1a1a1a] leading-[1.1] text-center z-[1]" style="transform: translateX(1.5px)">15%<br/>OFF</span>
+          <div class="group cursor-pointer">
+            <div class="relative w-full h-[100px] flex items-center justify-center rounded-2xl bg-white border border-[#eee] p-3 group-hover:border-[#ddd] group-hover:shadow-md transition-all duration-200">
+              <div v-if="i % 5 === 0 || i % 7 === 0" class="absolute top-2 right-2 z-[1]">
+                <div class="flex items-center gap-1 bg-[#fb923c] text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <span>15% OFF</span>
+                </div>
+              </div>
+              <img
+                :src="logo"
+                :alt="'Store ' + (i + 1)"
+                class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-200"
+              />
             </div>
-            <img
-              :src="logo"
-              :alt="'Store ' + (i + 1)"
-              class="max-w-full max-h-full object-contain"
-            />
+            <div class="flex items-center justify-between mt-2.5 px-0.5">
+              <span class="text-[14px] font-semibold text-[#222] truncate">Store {{ i + 1 }}</span>
+              <span class="text-[11px] text-[#0a8a4a] font-medium shrink-0 ml-2">Open</span>
+            </div>
+            <span class="text-[12px] text-[#888] px-0.5">Delivery by {{ times[i] }}</span>
           </div>
-          <span class="text-[13px] font-bold text-[#222] text-center mt-1.5 truncate max-w-full">Store {{ i + 1 }}</span>
-          <span class="text-[11px] font-light text-[#1a1a1a] text-center mt-1 bg-[#FFCC00] px-2 py-[1px] rounded inline-block">By {{ times[i] }}</span>
         </div>
       </div>
     </div>
