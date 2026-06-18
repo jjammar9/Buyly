@@ -111,13 +111,17 @@ async function placeOrder() {
             </div>
             <div class="flex gap-1 mb-3">
               <div v-for="s in ['confirmed', 'preparing', 'shipped', 'delivered']" :key="s" class="flex-1 flex flex-col items-center gap-1.5">
-                <div class="w-full h-1 rounded-full" :class="statusIndex(order.status) >= statusIndex(s) ? 'bg-[#166534]' : 'bg-[#e0e0e0]'" />
+                <div class="w-full h-1.5 rounded-full" :class="statusIndex(order.status) >= statusIndex(s) ? 'bg-[#166534]' : 'bg-[#e0e0e0]'" />
                 <span class="text-[10px] font-medium" :class="statusIndex(order.status) >= statusIndex(s) ? 'text-[#166534]' : 'text-[#bbb]'">{{ s.charAt(0).toUpperCase() + s.slice(1) }}</span>
               </div>
             </div>
-            <div v-for="item in order.items" :key="item.id" class="flex items-center justify-between py-1.5 text-[14px]">
-              <span class="text-[#555]">{{ item.product_name }} x{{ item.quantity }}</span>
-              <span class="text-[#222] font-medium">${{ (item.price * item.quantity).toFixed(2) }}</span>
+            <div class="text-[12px] text-[#888] mb-3 text-center">Placed {{ new Date(order.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) }} &middot; ETA {{ order.delivery_eta ? new Date(order.delivery_eta).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) : 'Calculating...' }}</div>
+            <div v-for="item in order.items" :key="item.id" class="flex items-center gap-3 py-2 text-[14px] border-b border-[#f0f0f0] last:border-0">
+              <div class="w-9 h-9 rounded-lg overflow-hidden bg-[#f5f5f5] shrink-0">
+                <img :src="item.product_image" :alt="item.product_name" class="w-full h-full object-cover" />
+              </div>
+              <span class="flex-1 text-[#555] truncate">{{ item.product_name }} <span class="text-[#888]">x{{ item.quantity }}</span></span>
+              <span class="text-[#222] font-medium shrink-0">${{ (item.price * item.quantity).toFixed(2) }}</span>
             </div>
             <div class="flex items-center justify-between pt-2 mt-2 border-t border-[#f0f0f0]">
               <span class="text-[13px] text-[#888] truncate max-w-[60%]">{{ order.address_line1 }}, {{ order.city }}, {{ order.state }} {{ order.zip }}</span>
@@ -140,11 +144,18 @@ async function placeOrder() {
           <router-link to="/catalog" class="inline-flex items-center gap-2 h-11 px-5 bg-[#0a8a4a] text-white text-[14px] font-semibold rounded-lg no-underline hover:bg-[#097a42]">Browse products</router-link>
         </div>
 
-        <div v-else-if="done" class="text-center py-16">
-          <div class="text-[48px] mb-4">&#10003;</div>
-          <h2 class="text-[24px] font-bold text-[#222] mb-2">Order placed!</h2>
-          <p class="text-[#888] mb-6">Your order has been confirmed.</p>
-          <router-link to="/orders" class="inline-block px-6 py-3 bg-[#0a8a4a] text-white rounded-lg no-underline text-[15px] font-semibold hover:bg-[#097a42]">View orders</router-link>
+        <div v-else-if="done" class="max-w-[480px] mx-auto text-center py-12">
+          <div class="w-16 h-16 rounded-full bg-[#e8f5e9] flex items-center justify-center mx-auto mb-5">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2 class="text-[26px] font-bold text-[#222] mb-2">Order confirmed!</h2>
+          <p class="text-[14px] text-[#555] mb-2">Your order will be delivered to <strong>{{ address.line1 }}, {{ address.city }}, {{ address.state }} {{ address.zip }}</strong></p>
+          <p class="text-[14px] text-[#555] mb-2">Estimated delivery: <strong>within 1–4 hours</strong></p>
+          <p class="text-[13px] text-[#888] mb-6">You can track your order status in real time.</p>
+          <router-link to="/orders" class="inline-flex items-center gap-2 h-12 px-6 bg-[#0a8a4a] text-white text-[15px] font-semibold rounded-lg no-underline hover:bg-[#097a42] transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            Track order
+          </router-link>
         </div>
 
         <div v-else class="flex gap-10 max-md:flex-col">
@@ -165,12 +176,15 @@ async function placeOrder() {
           <div class="w-[360px] max-md:w-full">
             <h2 class="text-[18px] font-bold text-[#222] mb-4">Order summary</h2>
             <div class="border border-[#e0e0e0] rounded-xl p-5">
-              <div v-for="item in items" :key="item.id" class="flex items-center justify-between py-2 border-b border-[#f0f0f0] last:border-0">
-                <div class="flex-1">
-                  <div class="text-[14px] font-medium text-[#222]">{{ item.name }}</div>
+              <div v-for="item in items" :key="item.id" class="flex items-center gap-3 py-2.5 border-b border-[#f0f0f0] last:border-0">
+                <div class="w-10 h-10 rounded-lg overflow-hidden bg-[#f5f5f5] shrink-0">
+                  <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-[14px] font-medium text-[#222] truncate">{{ item.name }}</div>
                   <div class="text-[12px] text-[#888]">{{ item.qty }} x ${{ item.price }}</div>
                 </div>
-                <div class="text-[14px] font-bold text-[#222]">${{ (item.qty * item.price).toFixed(2) }}</div>
+                <div class="text-[14px] font-bold text-[#222] shrink-0">${{ (item.qty * item.price).toFixed(2) }}</div>
               </div>
               <div class="flex items-center justify-between pt-3 mt-2 border-t border-[#e0e0e0]">
                 <span class="text-[16px] font-bold text-[#222]">Total</span>

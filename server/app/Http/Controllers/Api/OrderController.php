@@ -41,6 +41,7 @@ class OrderController extends Controller
             $orderItems[] = [
                 'product_id' => $product->id,
                 'product_name' => $product->name,
+                'product_image' => $product->image,
                 'price' => $price,
                 'quantity' => $item['quantity'],
             ];
