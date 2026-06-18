@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import SearchInput from './SearchInput.vue'
 import AppButton from './AppButton.vue'
@@ -9,12 +9,10 @@ import { useToast } from '../stores/toast.js'
 
 const router = useRouter()
 const { user, logout, isLoggedIn } = useAuth()
-const { count, loadFromServer } = useCart()
+const { count } = useCart()
 const { show } = useToast()
 
 const searchOpen = ref(false)
-
-onMounted(() => { if (isLoggedIn.value) loadFromServer() })
 
 function toggleSearch() { searchOpen.value = !searchOpen.value }
 async function handleLogout() { await logout(); show('Logged out'); router.push('/') }
