@@ -1,17 +1,27 @@
-const BASE = 'http://127.0.0.1:8000/api'
+const BASE = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api'
+const TIMEOUT = 15000
 
 async function request(path, opts = {}) {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), TIMEOUT)
   const token = localStorage.getItem('token')
   const headers = { 'Content-Type': 'application/json', Accept: 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}), ...opts.headers }
-  const res = await fetch(`${BASE}${path}`, { ...opts, headers })
-  if (!res.ok) {
-    if (res.status === 401) {
-      localStorage.removeItem('token')
+  try {
+    const res = await fetch(`${BASE}${path}`, { ...opts, headers, signal: controller.signal })
+    if (!res.ok) {
+      if (res.status === 401) {
+        localStorage.removeItem('token')
+      }
+      const body = await res.json().catch(() => ({}))
+      throw new Error(body.message || `Request failed: ${res.status}`)
     }
-    const body = await res.json().catch(() => ({}))
-    throw new Error(body.message || `Request failed: ${res.status}`)
+    return res.json()
+  } catch (e) {
+    if (e.name === 'AbortError') throw new Error('Request timed out')
+    throw e
+  } finally {
+    clearTimeout(timeout)
   }
-  return res.json()
 }
 
 export function getCategories() { return request('/categories') }

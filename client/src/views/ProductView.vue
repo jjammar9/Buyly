@@ -60,7 +60,12 @@ function add() {
         </div>
       </div>
 
-      <div v-else-if="error" class="text-center py-20 text-[#c00]">{{ error }}</div>
+      <div v-else-if="error" class="flex flex-col items-center justify-center py-20 text-center">
+        <svg class="w-20 h-20 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="text-[#c00] text-[16px]">{{ error }}</p>
+      </div>
       <div v-else-if="product" class="flex gap-10 max-md:flex-col">
         <div class="w-1/2 max-md:w-full">
           <img :src="product.image" :alt="product.name" class="w-full h-[400px] object-contain bg-[#f9f9f9] rounded-xl" />
