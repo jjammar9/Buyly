@@ -25,7 +25,16 @@ class ProductController extends Controller
 
         $perPage = min((int) $request->input('per_page', 20), 50);
 
-        return $query->latest()->paginate($perPage);
+        $sort = $request->input('sort', 'newest');
+        match ($sort) {
+            'price_asc' => $query->orderBy('price'),
+            'price_desc' => $query->orderByDesc('price'),
+            'name_asc' => $query->orderBy('name'),
+            'name_desc' => $query->orderByDesc('name'),
+            default => $query->latest(),
+        };
+
+        return $query->paginate($perPage);
     }
 
     public function featured()

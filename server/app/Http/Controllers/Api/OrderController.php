@@ -55,6 +55,7 @@ class OrderController extends Controller
             'state' => $validated['state'],
             'zip' => $validated['zip'],
             'notes' => $validated['notes'] ?? null,
+            'delivery_eta' => now()->addHours(rand(1, 4)),
         ]);
 
         $order->items()->createMany($orderItems);

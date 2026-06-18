@@ -2,9 +2,11 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '../stores/auth.js'
+import { useToast } from '../stores/toast.js'
 
 const router = useRouter()
 const { login } = useAuth()
+const { show } = useToast()
 const email = ref('')
 const password = ref('')
 const error = ref('')
@@ -13,8 +15,9 @@ async function submit() {
   try {
     error.value = ''
     await login(email.value, password.value)
+    show('Welcome back!')
     router.push('/')
-  } catch (e) { error.value = e.message }
+  } catch (e) { error.value = e.message; show(e.message || 'Login failed', 'error') }
 }
 </script>
 

@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { login as apiLogin, register as apiRegister, logout as apiLogout } from '../api.js'
+import { useCart } from '../stores/cart.js'
 
 const user = ref(JSON.parse(localStorage.getItem('user') || 'null'))
 const token = ref(localStorage.getItem('token') || '')
@@ -11,6 +12,8 @@ export function useAuth() {
     user.value = data.user
     localStorage.setItem('token', data.token)
     localStorage.setItem('user', JSON.stringify(data.user))
+    const { loadFromServer } = useCart()
+    await loadFromServer()
   }
 
   async function register(name, email, password, password_confirmation) {
@@ -19,6 +22,8 @@ export function useAuth() {
     user.value = data.user
     localStorage.setItem('token', data.token)
     localStorage.setItem('user', JSON.stringify(data.user))
+    const { loadFromServer } = useCart()
+    await loadFromServer()
   }
 
   async function logout() {

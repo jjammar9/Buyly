@@ -8,7 +8,7 @@ const imageUrls = [
 const features = [
   {
     title: 'Choose what you want',
-    text: 'Select items from your favorite grocery stores at Instacart.com or in the app. See real-time updates.'
+    text: 'Select items from your favorite grocery stores at Buyly.com or in the app. See real-time updates.'
   },
   {
     title: 'See real-time updates',
@@ -16,7 +16,7 @@ const features = [
   },
   {
     title: 'Get your items same-day',
-    text: 'Pick a convenient time for you. Enjoy Instacart\u2019s 100% quality guarantee on every order.'
+    text: 'Pick a convenient time for you. Enjoy Buyly\u2019s 100% quality guarantee on every order.'
   }
 ]
 </script>

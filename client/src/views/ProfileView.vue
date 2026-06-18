@@ -2,10 +2,12 @@
 import { ref, onMounted } from 'vue'
 import { useAuth } from '../stores/auth.js'
 import { updateUser } from '../api.js'
+import { useToast } from '../stores/toast.js'
 import NavBar from '../components/NavBar.vue'
 import FooterSection from '../components/FooterSection.vue'
 
 const { user } = useAuth()
+const { show } = useToast()
 
 const name = ref('')
 const email = ref('')
@@ -43,8 +45,10 @@ async function save() {
     newPassword.value = ''
     confirmPassword.value = ''
     message.value = 'Profile updated'
+    show('Profile updated')
   } catch (e) {
     error.value = e.message
+    show(e.message || 'Update failed', 'error')
   }
   saving.value = false
 }

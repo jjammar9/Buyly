@@ -3,12 +3,14 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getProduct, getProducts } from '../api.js'
 import { useCart } from '../stores/cart.js'
+import { useToast } from '../stores/toast.js'
 import NavBar from '../components/NavBar.vue'
 import FooterSection from '../components/FooterSection.vue'
 
 const route = useRoute()
 const router = useRouter()
 const { add: addToCart } = useCart()
+const { show } = useToast()
 
 const product = ref(null)
 const related = ref([])
@@ -28,6 +30,7 @@ async function load() {
 
 function add() {
   for (let i = 0; i < qty.value; i++) addToCart(product.value)
+  show(`${product.value.name} added to cart`)
   added.value = true
   setTimeout(() => { added.value = false }, 2000)
 }

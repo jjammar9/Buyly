@@ -10,7 +10,7 @@ class Order extends Model
 {
     protected $fillable = [
         'user_id', 'status', 'total',
-        'address_line1', 'address_line2', 'city', 'state', 'zip', 'notes',
+        'address_line1', 'address_line2', 'city', 'state', 'zip', 'notes', 'delivery_eta',
     ];
 
     public function user(): BelongsTo

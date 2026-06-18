@@ -45,3 +45,22 @@ export function getOrder(id) {
 export function createOrder(data) {
   return request('/orders', { method: 'POST', body: JSON.stringify(data) })
 }
+
+export function getCart() {
+  return request('/cart')
+}
+export function addToCart(productId, quantity = 1) {
+  return request('/cart/add', { method: 'POST', body: JSON.stringify({ product_id: productId, quantity }) })
+}
+export function updateCartItem(productId, quantity) {
+  return request(`/cart/product/${productId}`, { method: 'PUT', body: JSON.stringify({ quantity }) })
+}
+export function removeFromCart(productId) {
+  return request(`/cart/product/${productId}`, { method: 'DELETE' })
+}
+export function clearCart() {
+  return request('/cart', { method: 'DELETE' })
+}
+export function getCartCount() {
+  return request('/cart/count')
+}

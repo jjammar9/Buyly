@@ -2,9 +2,11 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '../stores/auth.js'
+import { useToast } from '../stores/toast.js'
 
 const router = useRouter()
 const { register } = useAuth()
+const { show } = useToast()
 const name = ref('')
 const email = ref('')
 const password = ref('')
@@ -15,8 +17,9 @@ async function submit() {
   try {
     error.value = ''
     await register(name.value, email.value, password.value, confirm.value)
+    show('Account created!')
     router.push('/')
-  } catch (e) { error.value = e.message }
+  } catch (e) { error.value = e.message; show(e.message || 'Registration failed', 'error') }
 }
 </script>
 

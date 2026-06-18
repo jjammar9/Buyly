@@ -1,19 +1,23 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import SearchInput from './SearchInput.vue'
 import AppButton from './AppButton.vue'
 import { useAuth } from '../stores/auth.js'
 import { useCart } from '../stores/cart.js'
+import { useToast } from '../stores/toast.js'
 
 const router = useRouter()
 const { user, logout, isLoggedIn } = useAuth()
-const { count } = useCart()
+const { count, loadFromServer } = useCart()
+const { show } = useToast()
 
 const searchOpen = ref(false)
 
+onMounted(() => { if (isLoggedIn.value) loadFromServer() })
+
 function toggleSearch() { searchOpen.value = !searchOpen.value }
-async function handleLogout() { await logout(); router.push('/') }
+async function handleLogout() { await logout(); show('Logged out'); router.push('/') }
 </script>
 
 <template>
@@ -67,15 +71,6 @@ async function handleLogout() { await logout(); router.push('/') }
       </div>
     </nav>
 
-    <div v-if="!isLoggedIn" class="bg-white border-b border-[#e8e8e8] max-md:hidden">
-      <div class="w-[95%] max-w-[1440px] mx-auto flex items-center gap-1 h-[42px]">
-        <router-link to="/categories" class="px-3 py-1.5 text-[14px] text-[#444] no-underline rounded-lg hover:bg-[#e8e6e1] hover:text-[#166534] font-medium transition-colors">Categories</router-link>
-        <router-link to="/cart" class="flex items-center gap-1.5 px-3 py-1.5 text-[14px] text-[#444] no-underline rounded-lg hover:bg-[#e8e6e1] hover:text-[#166534] font-medium transition-colors">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59L5.25 14H19v-2H7.42l.94-2H17c.5 0 .95-.28 1.16-.72l3.42-6.99c.14-.29.13-.63-.03-.92A1 1 0 0 0 20.76 2H5.21L4.27 0H1zm6 14h12v-2H7l1.1-2h7.45l1.58-3H8.53L6.27 4H20.7l-2.8 5H8.53L7 16z"/></svg>
-          Shop
-        </router-link>
-        <router-link to="/help" class="px-3 py-1.5 text-[14px] text-[#444] no-underline rounded-lg hover:bg-[#e8e6e1] hover:text-[#166534] font-medium transition-colors">Help</router-link>
-      </div>
-    </div>
+
   </div>
 </template>
